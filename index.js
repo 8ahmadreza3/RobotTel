@@ -1,24 +1,22 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable no-unused-expressions */
 const TelegramBot = require('node-telegram-bot-api')
-const { token, tel, website } = require('./config')
+const { supportId, token, tel, website } = require('./config')
 const bot = new TelegramBot(token, { polling: true })
 
-const inLineButton = buttones => buttones.map((button) => {
-  return {
-    text: button.text,
-    callback_data: button.callback_data
-  }
-})
+const createInLineButtons = buttones => buttones.map((button) => ({
+  text: button.text,
+  callback_data: button.callback_data
+}))
 
-const createBackButton = () => { [{ text: 'بازگشت🔙', callback_data: 'back' }] }
+const createBackButton = () => ({ text: 'بازگشت🔙', callback_data: 'back' })
 
-const sendMessage = (chatId, text, options) => {
+const sendMessageWithOptions = (chatId, text, options) => {
   const defaultOption = { parse_mode: 'markdown' }
   bot.sendMessage(chatId, text, { ...defaultOption, ...options })
 }
 
-const editMessage = (checkId, messageId, text, options) => {
+const editMessageWithOptions = (checkId, messageId, text, options) => {
   const defaultOption = { parse_mode: 'markdown' }
   bot.editMessageText(text, { chat_id: checkId, message_id: messageId, ...defaultOption, ...options })
 }
@@ -31,11 +29,11 @@ bot.onText(/\/start/, msg => {
   const startOptions = {
     reply_markup: {
       inline_keyboard: [
-        inLineButton([{ text: 'درباره', callback_data: 'about' }, { text: 'channels', callback_data: 'channels' }])
+        createInLineButtons([{ text: 'درباره', callback_data: 'about' }, { text: 'پشتیبانی', callback_data: 'support' }])
       ]
     }
   }
-  sendMessage(chatId, welcome, startOptions)
+  sendMessageWithOptions(chatId, welcome, startOptions)
 })
 
 bot.on('callback_query', callbackQuery => {
@@ -48,13 +46,29 @@ bot.on('callback_query', callbackQuery => {
       همای کتاب یک سامانه دسترسی به کتاب است که همگان می تواننده کتاب خود را به امانت بگذارند یا کتاب مورد نیاز را به امانت بگیرند.
       سایت ما ${website}
       خوشحال میشیم که ما رو دنبال کنید🤍`
-      const inlineKeyboard = [[
+      const inlineKeyboardInfo = [[
         { text: 'سایت ما', url: website },
-        { text: 'پشتیبانی تلگرام', url: tel }
-      ], createBackButton()]
-      const aboutMeOptions = { reply_markup: { inline_keyboard: inlineKeyboard } }
-      editMessage(chatId, messageId, homayeketabInfo, aboutMeOptions)
+        { text: 'پشتیبانی تلگرام', url: tel },
+        createBackButton()
+      ]]
+      const aboutMeOptions = {
+        reply_markup: {
+          inline_keyboard: inlineKeyboardInfo
+        }
+      }
+      editMessageWithOptions(chatId, messageId, homayeketabInfo, aboutMeOptions)
       break
-    case 'channels' :
+    case 'support' :
+      const supportMessage = `
+      کاربر گرامی 🤞
+      می توانید با پشتیبانی ${supportId} پیام دهید
+      همچنین در اینستاگرام با آیدی ${supportId} نیز فعال هستیم🤍`
+      const inlineKeyboardSupport = [[
+        createBackButton()
+      ]]
+      const supportOptions = { reply_markup: { inline_keyboard: inlineKeyboardSupport } }
+      editMessageWithOptions(chatId, messageId, supportMessage, supportOptions)
+      break
   }
+  bot.answerCallbackQuery(callbackQuery.id)
 })
