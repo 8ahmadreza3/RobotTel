@@ -4,12 +4,7 @@ const TelegramBot = require('node-telegram-bot-api')
 const { supportId, token, tel, website } = require('./config')
 const bot = new TelegramBot(token, { polling: true })
 
-const createInLineButtons = buttones => buttones.map((button) => ({
-  text: button.text,
-  callback_data: button.callback_data
-}))
-
-const createBackButton = () => ({ text: 'بازگشت🔙', callback_data: 'back' })
+const createBackButton = () => ({ text: 'بازگشت🔙', callback_data: 'menu' })
 
 const sendMessageWithOptions = (chatId, text, options) => {
   const defaultOption = { parse_mode: 'markdown' }
@@ -25,11 +20,18 @@ bot.onText(/\/start/, msg => {
   const chatId = msg.chat.id
   const userName = msg.from.first_name
   const userLastName = msg.from.last_name || ''
-  const welcome = `${userName} ${userLastName}\n عزیز به ربات همای کتاب خوش آمدی🙌`
+  const welcome = `${userName} ${userLastName}\n عزیز به ربات همای کتاب خوش آمدی🙌
+
+می توانید در منوی اصلی  از ربات استفاده کنید
+  `
   const startOptions = {
     reply_markup: {
       inline_keyboard: [
-        createInLineButtons([{ text: 'درباره', callback_data: 'about' }, { text: 'پشتیبانی', callback_data: 'support' }])
+        [
+          { text: 'درباره📌', callback_data: 'about' },
+          { text: 'پشتیبانی👨‍🔧', callback_data: 'support' },
+          { text: 'منو اصلی🗃️', callback_data: 'menu' }
+        ]
       ]
     }
   }
@@ -68,6 +70,25 @@ bot.on('callback_query', callbackQuery => {
       ]]
       const supportOptions = { reply_markup: { inline_keyboard: inlineKeyboardSupport } }
       editMessageWithOptions(chatId, messageId, supportMessage, supportOptions)
+      break
+    case 'menu':
+      const menuMessage = `منوی اصلی💎\n
+      همای کتاب در خدمت شماست.
+
+می توانید گزینه ی مورد نظر خود را انتخاب کنید😉`
+      const menuOptions = {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: 'کتاب ها', callback_data: 'books' },
+              { text: 'نویسندگان', callback_data: 'authors' },
+              { text: 'درباره', callback_data: 'about' },
+              { text: 'پشتیبانی', callback_data: 'support' }
+            ]
+          ]
+        }
+      }
+      editMessageWithOptions(chatId, messageId, menuMessage, menuOptions)
       break
   }
   bot.answerCallbackQuery(callbackQuery.id)
