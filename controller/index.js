@@ -1,9 +1,11 @@
-const menuContoller = require('./menu')
-const startController = require('./start')
-const aboutController = require('./about')
+const menu = require('./menu')
+const start = require('./start')
+const about = require('./about')
+const support = require('./support')
 
 module.exports = {
-  menuContoller,
-  startController,
-  aboutController
+  menu,
+  start,
+  about,
+  support
 }
