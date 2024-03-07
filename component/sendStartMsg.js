@@ -1,5 +1,4 @@
-module.exports = (bot, callbackQuery, text, options) => {
-  const chatId = callbackQuery.message.chat.id
+module.exports = (bot, chatId, text, options) => {
   const defaultOption = { parse_mode: 'markdown' }
   bot.sendMessage(chatId, text, { ...defaultOption, ...options })
 }
