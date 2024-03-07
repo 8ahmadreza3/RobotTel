@@ -3,7 +3,7 @@ const start = require('./start')
 const about = require('./about')
 const support = require('./support')
 const books = require('./books.js')
-const authors = require('./auhtors.js')
+const authors = require('./authors.js')
 const categories = require('./categories')
 
 module.exports = {

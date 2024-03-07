@@ -4,21 +4,27 @@ const component = require('../component')
 const axios = require('axios')
 
 module.exports = async () => {
-  const auhtorsMessage = `
+  console.log('here')
+  const authorsMessage = `
 
   کاربر گرامی می توانید نویسنده مورد نظر خود را انتخاب کنید و کتاب های نویسنده مورد نظر را ببینید🫰🏼`
-  const authors = await axios.get(backend + 'authors/recommend')
+  let authors
+  await axios.get(backend + 'authors')
+    .then((res) => {
+      authors = res.data.data.authors
+    })
+  const authorsButton = authors.map(author =>
+    [{ text: author.name, url: website + 'author/' + author.address }]
+  )
   const inlineKeyboardInfo = [
-    authors.map(author =>
-      [{ text: author.name, url: website + 'author/' + author.address }]
-    ),
+    ...authorsButton,
     [{ text: 'نویسندگان بیشتر', url: website + 'authors' }],
-    component.backButoon()
+    [component.backButoon()]
   ]
   const authorsOptions = {
     reply_markup: {
       inline_keyboard: inlineKeyboardInfo
     }
   }
-  return { auhtorsMessage, authorsOptions }
+  return { authorsMessage, authorsOptions }
 }

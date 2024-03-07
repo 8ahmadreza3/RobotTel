@@ -11,14 +11,12 @@ module.exports = async () => {
   await axios.get(backend + 'books')
     .then((res) => {
       books = res.data.data.books
-      console.log(books)
     })
   const bookButtons = books.map(book =>
-    [{ text: book.name + ' از ' + book.author.name, url: website + 'book/' + book.address }]
+    [{ text: book.name + ' از ' + book.author, url: website + 'book/' + book.address }]
   )
-  console.log(bookButtons)
   const inlineKeyboardInfo = [
-    bookButtons,
+    ...bookButtons,
     [{ text: 'کتاب های بیشتر📚', url: website + 'books/hame' }],
     [component.backButoon()]
   ]
