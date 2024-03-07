@@ -7,27 +7,32 @@ const component = require('./component')
 const controller = require('./controller')
 
 bot.onText(/\/start/, msg => {
-  const { chatId, welcomeMessage, startOptions } = controller.start()
+  const { chatId, welcomeMessage, startOptions } = controller.start(msg)
   component.sendMsgOption(bot, chatId, welcomeMessage, startOptions)
 })
 
 bot.on('callback_query', callbackQuery => {
-  const chatId = callbackQuery.message.chat.id
-  const messageId = callbackQuery.message.message_id
   const data = callbackQuery.data
   switch (data) {
     case 'about' :
-      const { infoMessage, infoOptions } = controller.about()
-      component.sendMsgOption(bot, chatId, messageId, infoMessage, infoOptions)
+      const { aboutMessage, aboutOptions } = controller.about()
+      component.editMsgOption(bot, callbackQuery, aboutMessage, aboutOptions)
       break
     case 'support' :
       const { supportMessage, supportOptions } = controller.support()
-      component.sendMsgOption(bot, chatId, messageId, supportMessage, supportOptions)
+      component.editMsgOption(bot, callbackQuery, supportMessage, supportOptions)
       break
     case 'menu':
       const { menuMessage, menuOptions } = controller.menu()
-      component.editMsgOption(bot, chatId, messageId, menuMessage, menuOptions)
+      component.editMsgOption(bot, callbackQuery, menuMessage, menuOptions)
       break
+    case 'books':
+      const { booksMessage, booksOptions } = controller.books()
+      component.editMsgOption(bot, callbackQuery, booksMessage, booksOptions)
+      break
+    case 'authors':
+      break
+    // case '':
   }
   bot.answerCallbackQuery(callbackQuery.id)
 })
