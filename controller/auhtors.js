@@ -10,7 +10,7 @@ module.exports = async () => {
   const authors = await axios.get(backend + 'authors/recommend')
   const inlineKeyboardInfo = [
     authors.map(author =>
-      [{ text: author.name + ' از ' + author.author, url: website + 'author/' + author.address }]
+      [{ text: author.name, url: website + 'author/' + author.address }]
     ),
     [{ text: 'نویسندگان بیشتر', url: website + 'authors' }],
     component.backButoon()

@@ -4,6 +4,7 @@ const about = require('./about')
 const support = require('./support')
 const books = require('./books.js')
 const authors = require('./auhtors.js')
+const categories = require('./categories')
 
 module.exports = {
   menu,
@@ -11,5 +12,6 @@ module.exports = {
   about,
   support,
   books,
-  authors
+  authors,
+  categories
 }
