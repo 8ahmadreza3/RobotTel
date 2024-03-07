@@ -31,6 +31,8 @@ bot.on('callback_query', callbackQuery => {
       component.editMsgOption(bot, callbackQuery, booksMessage, booksOptions)
       break
     case 'authors':
+      const { authorsMessage, authorsOptions } = controller.authors()
+      component.editMsgOption(bot, callbackQuery, authorsMessage, authorsOptions)
       break
     // case '':
   }
