@@ -34,10 +34,10 @@ bot.on('callback_query', async (callbackQuery) => {
       const { authorsMessage, authorsOptions } = await controller.authors()
       component.sendMsgOption(bot, callbackQuery, authorsMessage, authorsOptions)
       break
-    // case 'categories':
-    //   const { categoriesMessage, categoriesOptions } = await controller.categories()
-    //   component.sendMsgOption(bot, callbackQuery, categoriesMessage, categoriesOptions)
-    //   break
+    case 'categories':
+      const { categoriesMessage, categoriesOptions } = await controller.categories()
+      component.sendMsgOption(bot, callbackQuery, categoriesMessage, categoriesOptions)
+      break
   }
   bot.answerCallbackQuery(callbackQuery.id)
 })

@@ -22,7 +22,11 @@ module.exports = async () => {
   const categoriesMessage = `
 
   کاربر گرامی می توانید دسته بندی مورد نظر خود را انتخاب کنید و کتاب های دسته بندی را ببینید🫰🏼`
-  const categories = await axios.get(backend + 'categories/recommend')
+  let categories
+  await axios.get(backend + 'categories/recommend')
+    .then((res) => {
+      categories = res.data.data.categories
+    })
   const inlineKeyboardInfo = [
     ...createPairbutton(categories),
     [{ text: 'کتاب های بیشتر📚', url: website + 'books/hame' }],
