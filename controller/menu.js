@@ -7,12 +7,12 @@ module.exports = () => {
     reply_markup: {
       inline_keyboard: [
         [
-          { text: 'کتاب ها', callback_data: 'books' },
-          { text: 'نویسندگان', callback_data: 'authors' },
-          { text: 'دسته بندی', callback_data: 'categories' }
+          { text: 'کتاب ها📚', callback_data: 'books' },
+          { text: 'نویسندگان✍🏼', callback_data: 'authors' },
+          { text: 'دسته بندی🗂️', callback_data: 'categories' }
         ], [
-          { text: 'درباره', callback_data: 'about' },
-          { text: 'پشتیبانی', callback_data: 'support' }
+          { text: 'درباره 🧩', callback_data: 'about' },
+          { text: 'پشتیبانی📞', callback_data: 'support' }
         ]
       ]
     }
