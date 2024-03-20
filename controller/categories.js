@@ -4,16 +4,25 @@ const component = require('../component')
 const axios = require('axios')
 
 const createPairbutton = (categories) => {
-  const buttons = categories.map((category, index) => {
-    const nextCategory = categories[index + 1]
-    return [
-      { text: category.name, url: website + 'books/' + category.address },
-      nextCategory ? { text: nextCategory.name, url: website + 'books/' + nextCategory.address } : null
-    ].filter(Boolean)
-  })
-  const { length } = categories
-  if (length % 2 === 0) {
-    buttons[length - 1].push({ text: categories[length - 1].name, url: website + 'books/' + categories[length - 1].address })
+  const buttons = []
+  for (let i = 0; i + 1 < categories.length; i += 2) {
+    const pair = [categories[i]]
+    if (i + 1 < categories.length) {
+      pair.push(categories[i + 1])
+    }
+    buttons.push(
+      pair.map((category) => ({
+        text: category.name,
+        url: website + 'books/' + category.address
+      }))
+    )
+  }
+  if (categories.length % 2 !== 0) {
+    const lastCategory = [{
+      text: categories[categories.length - 1].name,
+      url: website + 'author/' + categories[categories.length - 1].address
+    }]
+    buttons.push(lastCategory)
   }
   return buttons
 }
@@ -29,8 +38,8 @@ module.exports = async () => {
     })
   const inlineKeyboardInfo = [
     ...createPairbutton(categories),
-    [{ text: 'کتاب های بیشتر📚', url: website + 'books/hame' }],
-    [component.backButoon()]
+    [{ text: 'کتاب های بیشتر📚', url: website + 'books/hame' },
+      component.backButoon()]
   ]
   const categoriesOptions = {
     reply_markup: {
