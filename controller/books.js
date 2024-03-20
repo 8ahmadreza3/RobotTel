@@ -4,16 +4,25 @@ const component = require('../component')
 const axios = require('axios')
 
 const createPairbutton = (books) => {
-  const buttons = books.map((book, index) => {
-    const nextBook = books[index + 1]
-    return [
-      { text: book.name + ' از ' + book.author, url: website + 'book/' + book.address },
-      nextBook ? { text: book.name + ' از ' + book.author, url: website + 'book/' + nextBook.address } : null
-    ].filter(Boolean)
-  })
-  const { length } = books
-  if (length % 2 === 0) {
-    buttons[buttons.length - 1].push({ text: books[length - 1].name + ' از ' + books[length - 1].author, url: website + 'books/' + books[length - 1].address })
+  const buttons = []
+  for (let i = 0; i + 1 < books.length; i += 2) {
+    const pair = [books[i]]
+    if (i + 1 < books.length) {
+      pair.push(books[i + 1])
+    }
+    buttons.push(
+      pair.map((book) => ({
+        text: book.name,
+        url: website + 'book/' + book.address
+      }))
+    )
+  }
+  if (books.length % 2 !== 0) {
+    const lastBook = [{
+      text: books[books.length - 1].name,
+      url: website + 'book/' + books[books.length - 1].address
+    }]
+    buttons.push(lastBook)
   }
   return buttons
 }
@@ -29,8 +38,8 @@ module.exports = async () => {
     })
   const inlineKeyboardInfo = [
     ...createPairbutton(books),
-    [{ text: 'کتاب های بیشتر📚', url: website + 'books/hame' }],
-    [component.backButoon()]
+    [{ text: 'کتاب های بیشتر📚', url: website + 'books/hame' },
+      component.backButoon()]
   ]
   const booksOptions = {
     reply_markup: {
