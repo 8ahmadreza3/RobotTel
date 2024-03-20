@@ -5,5 +5,6 @@ module.exports = {
   website: process.env.WEBSITE,
   tel: process.env.TELEGRAM,
   supportId: process.env.SUPPORTID,
-  backend: process.env.BACKEND
+  backend: process.env.BACKEND,
+  instagram: process.env.INSTAGRAM
 }

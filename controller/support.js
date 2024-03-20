@@ -1,11 +1,11 @@
 const component = require('../component')
-const { supportId } = require('../config')
+const { supportId, instagram } = require('../config')
 
 module.exports = () => {
   const supportMessage = `
   کاربر گرامی 🤞
-  می توانید با پشتیبانی ${supportId} پیام دهید
-  همچنین در اینستاگرام با آیدی ${supportId} نیز فعال هستیم🤍`
+  می توانید با پشتیبانی ${supportId} در ارتباط باشید \n
+همچنین در اینستاگرام ${instagram} نیز فعال هستیم🤍`
   const inlineKeyboardSupport = [[
     component.backButoon()
   ]]
