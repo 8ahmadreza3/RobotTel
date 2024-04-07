@@ -38,6 +38,9 @@ bot.on('callback_query', async (callbackQuery) => {
       const { categoriesMessage, categoriesOptions } = await controller.categories()
       component.sendMsgOption(bot, callbackQuery, categoriesMessage, categoriesOptions)
       break
+    case 'website':
+      const { webMessage, webOptions } = await controller.website()
+      component.sendMsgOption(bot, callbackQuery, webMessage, webOptions)
   }
   bot.answerCallbackQuery(callbackQuery.id)
 })

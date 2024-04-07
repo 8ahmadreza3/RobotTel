@@ -12,7 +12,8 @@ module.exports = () => {
           { text: 'دسته بندی🗂️', callback_data: 'categories' }
         ], [
           { text: 'درباره 🧩', callback_data: 'about' },
-          { text: 'پشتیبانی📞', callback_data: 'support' }
+          { text: 'پشتیبانی📞', callback_data: 'support' },
+          { text: 'سایت ما💡', callback_data: 'website' }
         ]
       ]
     }
