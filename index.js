@@ -3,44 +3,36 @@
 const TelegramBot = require('node-telegram-bot-api')
 const { token } = require('./config')
 const bot = new TelegramBot(token, { polling: true })
-const component = require('./component')
 const controller = require('./controller')
 
 bot.onText(/\/start/, msg => {
-  const { chatId, welcomeMessage, startOptions } = controller.start(msg)
-  component.sendStartMsg(bot, chatId, welcomeMessage, startOptions)
+  controller.start(msg, bot)
 })
 
 bot.on('callback_query', async (callbackQuery) => {
   const data = callbackQuery.data
   switch (data) {
     case 'about' :
-      const { aboutMessage, aboutOptions } = controller.about()
-      component.editMsgOption(bot, callbackQuery, aboutMessage, aboutOptions)
+      controller.about(bot, callbackQuery)
       break
     case 'support' :
-      const { supportMessage, supportOptions } = controller.support()
-      component.editMsgOption(bot, callbackQuery, supportMessage, supportOptions)
+      controller.support(bot, callbackQuery)
       break
     case 'menu':
-      const { menuMessage, menuOptions } = controller.menu()
-      component.editMsgOption(bot, callbackQuery, menuMessage, menuOptions)
+      controller.menu(bot, callbackQuery)
       break
     case 'books':
-      const { booksMessage, booksOptions } = await controller.books()
-      component.sendMsgOption(bot, callbackQuery, booksMessage, booksOptions)
+      await controller.books(bot, callbackQuery)
       break
     case 'authors':
-      const { authorsMessage, authorsOptions } = await controller.authors()
-      component.sendMsgOption(bot, callbackQuery, authorsMessage, authorsOptions)
+      await controller.authors(bot, callbackQuery)
       break
     case 'categories':
-      const { categoriesMessage, categoriesOptions } = await controller.categories()
-      component.sendMsgOption(bot, callbackQuery, categoriesMessage, categoriesOptions)
+      await controller.categories(bot, callbackQuery)
       break
     case 'website':
-      const { webMessage, webOptions } = await controller.website()
-      component.sendMsgOption(bot, callbackQuery, webMessage, webOptions)
+      controller.website(bot, callbackQuery)
+      break
   }
   bot.answerCallbackQuery(callbackQuery.id)
 })

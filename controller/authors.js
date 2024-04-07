@@ -27,7 +27,7 @@ const createPairbutton = (authors) => {
   return buttons
 }
 
-module.exports = async () => {
+module.exports = async (bot, callbackQuery) => {
   const authorsMessage = `
 
   کاربر گرامی می توانید نویسنده مورد نظر خود را انتخاب کنید و کتاب های نویسنده مورد نظر را ببینید🫰🏼`
@@ -46,5 +46,5 @@ module.exports = async () => {
       inline_keyboard: inlineKeyboardInfo
     }
   }
-  return { authorsMessage, authorsOptions }
+  component.sendMsgOption(bot, callbackQuery, authorsMessage, authorsOptions)
 }

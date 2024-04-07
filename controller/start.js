@@ -1,4 +1,6 @@
-module.exports = (msg) => {
+const component = require('../component')
+
+module.exports = (msg, bot) => {
   const chatId = msg.chat.id
   const userName = msg.from.first_name
   const userLastName = msg.from.last_name || ''
@@ -22,5 +24,5 @@ module.exports = (msg) => {
       ]
     }
   }
-  return { chatId, welcomeMessage, startOptions }
+  component.sendStartMsg(bot, chatId, welcomeMessage, startOptions)
 }

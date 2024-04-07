@@ -27,7 +27,7 @@ const createPairbutton = (categories) => {
   return buttons
 }
 
-module.exports = async () => {
+module.exports = async (bot, callbackQuery) => {
   const categoriesMessage = `
 
   کاربر گرامی می توانید دسته بندی مورد نظر خود را انتخاب کنید و کتاب های دسته بندی را ببینید🫰🏼`
@@ -46,5 +46,5 @@ module.exports = async () => {
       inline_keyboard: inlineKeyboardInfo
     }
   }
-  return { categoriesMessage, categoriesOptions }
+  component.sendMsgOption(bot, callbackQuery, categoriesMessage, categoriesOptions)
 }

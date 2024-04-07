@@ -27,7 +27,7 @@ const createPairbutton = (books) => {
   return buttons
 }
 
-module.exports = async () => {
+module.exports = async (bot, callbackQuery) => {
   const booksMessage = `
 
   کاربر گرامی می توانید کتاب مورد نظر خود را انتخاب کنید و آگهی های مربوطه را ببینید🫰🏼`
@@ -46,5 +46,5 @@ module.exports = async () => {
       inline_keyboard: inlineKeyboardInfo
     }
   }
-  return { booksMessage, booksOptions }
+  component.sendMsgOption(bot, callbackQuery, booksMessage, booksOptions)
 }

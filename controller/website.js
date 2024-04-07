@@ -1,7 +1,7 @@
 const { website } = require('../config')
-const backButoon = require('../component/backBoutton')
+const component = require('../component')
 
-module.exports = () => {
+module.exports = (bot, callbackQuery) => {
   const webMessage = `
 کاربر گرامی هُمای‌‌کتاب
 🫰🏼😉برای دسترسی سریع تر به وبسایت میتوانید گزینه ی مورد نظر خود را انتخاب کنید
@@ -22,10 +22,10 @@ module.exports = () => {
         ], [
           { text: 'درباره 🧩', callback_data: 'about' },
           { text: 'پشتیبانی📞', callback_data: 'support' },
-          backButoon()
+          component.backButoon()
         ]
       ]
     }
   }
-  return { webMessage, webOptions }
+  component.sendMsgOption(bot, callbackQuery, webMessage, webOptions)
 }

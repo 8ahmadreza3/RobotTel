@@ -1,4 +1,6 @@
-module.exports = () => {
+const component = require('../component')
+
+module.exports = (bot, callbackQuery) => {
   const menuMessage = `منوی اصلی💎\n
   همای کتاب در خدمت شماست.
 
@@ -18,5 +20,5 @@ module.exports = () => {
       ]
     }
   }
-  return { menuMessage, menuOptions }
+  component.editMsgOption(bot, callbackQuery, menuMessage, menuOptions)
 }
