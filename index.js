@@ -21,6 +21,9 @@ bot.on('callback_query', async (callbackQuery) => {
     case 'menu':
       controller.menu(bot, callbackQuery)
       break
+    case 'website':
+      controller.website(bot, callbackQuery)
+      break
     case 'books':
       await controller.books(bot, callbackQuery)
       break
@@ -29,9 +32,6 @@ bot.on('callback_query', async (callbackQuery) => {
       break
     case 'categories':
       await controller.categories(bot, callbackQuery)
-      break
-    case 'website':
-      controller.website(bot, callbackQuery)
       break
   }
   bot.answerCallbackQuery(callbackQuery.id)
