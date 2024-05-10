@@ -8,4 +8,7 @@ const app = express()
 app.listen(port, () => {
   console.log(`app is running on port:${port}`)
 })
+app.get('/', (req, res) => {
+  res.send('app is running')
+})
 bootApp(bot)

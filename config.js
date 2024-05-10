@@ -6,5 +6,6 @@ module.exports = {
   tel: process.env.TELEGRAM,
   supportId: process.env.SUPPORTID,
   backend: process.env.BACKEND,
-  instagram: process.env.INSTAGRAM
+  instagram: process.env.INSTAGRAM,
+  port: process.env.PORT
 }
